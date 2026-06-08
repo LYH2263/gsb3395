@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.StudentMapper">
+    <select id="findById" resultType="Student">
+        SELECT s.*, c.class_name, u.username 
+        FROM students s
+        LEFT JOIN classes c ON s.class_id = c.id
+        LEFT JOIN users u ON s.user_id = u.id
+        WHERE s.id = #{id}
+    </select>
+
+    <select id="findByPage" resultType="Student">
+        SELECT s.*, c.class_name 
+        FROM students s
+        LEFT JOIN classes c ON s.class_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                AND (s.name LIKE CONCAT('%', #{name}, '%') OR s.student_no LIKE CONCAT('%', #{name}, '%'))
+            </if>
+            <if test="classId != null">
+                AND s.class_id = #{classId}
+            </if>
+        </where>
+        ORDER BY s.id DESC
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM students
+        <where>
+            <if test="name != null and name != ''">
+                AND (name LIKE CONCAT('%', #{name}, '%') OR student_no LIKE CONCAT('%', #{name}, '%'))
+            </if>
+            <if test="classId != null">
+                AND class_id = #{classId}
+            </if>
+        </where>
+    </select>
+
+    <select id="countByStudentNo" resultType="int">
+        SELECT COUNT(*) FROM students 
+        WHERE student_no = #{studentNo}
+        <if test="excludeId != null">
+            AND id != #{excludeId}
+        </if>
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO students (student_no, name, gender, birthday, phone, email, class_id, user_id)
+        VALUES (#{studentNo}, #{name}, #{gender}, #{birthday}, #{phone}, #{email}, #{classId}, #{userId})
+    </insert>
+
+    <update id="update">
+        UPDATE students SET
+        student_no = #{studentNo},
+        name = #{name},
+        gender = #{gender},
+        birthday = #{birthday},
+        phone = #{phone},
+        email = #{email},
+        class_id = #{classId},
+        user_id = #{userId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM students WHERE id = #{id}
+    </delete>
+
+    <select id="countTotal" resultType="int">
+        SELECT COUNT(*) FROM students
+    </select>
+
+    <select id="countByGender" resultType="map">
+        SELECT gender as name, COUNT(*) as value FROM students GROUP BY gender
+    </select>
+
+    <select id="countByClass" resultType="map">
+        SELECT c.class_name as name, COUNT(s.id) as value 
+        FROM classes c 
+        LEFT JOIN students s ON c.id = s.class_id 
+        GROUP BY c.id, c.class_name
+    </select>
+
+    <select id="countActiveCourses" resultType="int">
+        SELECT COUNT(*) FROM courses
+    </select>
+    
+    <select id="getAverageScore" resultType="double">
+        SELECT IFNULL(AVG(score), 0) FROM scores
+    </select>
+
+    <select id="countActiveClasses" resultType="int">
+        SELECT COUNT(*) FROM classes
+    </select>
+</mapper>

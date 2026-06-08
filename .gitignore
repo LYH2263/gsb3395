@@ -1,0 +1,21 @@
+# 题目说明文件
+题目.md
+
+# Java / Maven
+backend/target/
+*.class
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
+
+# Env
+.env
