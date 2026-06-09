@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.student.mapper.ScoreMapper">
+
+    <select id="findClassScoreDetails" resultType="com.student.entity.Score">
+        SELECT
+            sc.id,
+            sc.student_id,
+            sc.course_id,
+            sc.score,
+            sc.term,
+            sc.exam_time,
+            s.name        AS student_name,
+            s.student_no  AS student_no,
+            c.course_name AS course_name,
+            c.course_code AS course_code,
+            c.credit      AS credit
+        FROM scores sc
+        JOIN students s ON s.id = sc.student_id
+        JOIN courses  c ON c.id = sc.course_id
+        WHERE s.class_id = #{classId}
+        <if test="term != null and term != ''">
+            AND sc.term = #{term}
+        </if>
+        ORDER BY sc.student_id ASC, sc.course_id ASC, sc.exam_time ASC
+    </select>
+
+    <select id="findTermsByClass" resultType="string">
+        SELECT DISTINCT sc.term
+        FROM scores sc
+        JOIN students s ON s.id = sc.student_id
+        WHERE s.class_id = #{classId}
+          AND sc.term IS NOT NULL
+        ORDER BY sc.term DESC
+    </select>
+
+</mapper>

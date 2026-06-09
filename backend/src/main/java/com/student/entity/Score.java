@@ -15,5 +15,8 @@ public class Score {
     
     // Extra fields
     private String studentName;
+    private String studentNo;
     private String courseName;
+    private String courseCode;
+    private Integer credit;
 }
