@@ -4,7 +4,8 @@ import {
   Users, 
   LayoutDashboard, 
   LogOut,
-  GraduationCap
+  GraduationCap,
+  AlertTriangle
 } from 'lucide-react';
 import useAuthStore from '../store/useAuthStore';
 import { clsx } from 'clsx';
@@ -17,6 +18,7 @@ function cn(...inputs) {
 const MENU_ITEMS = [
   { id: 'dashboard', label: '控制面板', icon: LayoutDashboard, path: '/' },
   { id: 'students', label: '学生管理', icon: Users, path: '/students' },
+  { id: 'warning', label: '学业预警', icon: AlertTriangle, path: '/warning' },
 ];
 
 export default function Sidebar() {

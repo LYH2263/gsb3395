@@ -93,4 +93,16 @@
     <select id="countActiveClasses" resultType="int">
         SELECT COUNT(*) FROM classes
     </select>
+
+    <select id="findByClassId" resultType="Student">
+        SELECT s.*, c.class_name
+        FROM students s
+        LEFT JOIN classes c ON s.class_id = c.id
+        <where>
+            <if test="classId != null">
+                AND s.class_id = #{classId}
+            </if>
+        </where>
+        ORDER BY s.id
+    </select>
 </mapper>
