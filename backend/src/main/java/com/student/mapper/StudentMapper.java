@@ -8,6 +8,7 @@ public interface StudentMapper {
     Student findById(@Param("id") Integer id);
     List<Student> findByPage(@Param("offset") int offset, @Param("limit") int limit, 
                            @Param("name") String name, @Param("classId") Integer classId);
+    List<Student> findByClassId(@Param("classId") Integer classId);
     int count(@Param("name") String name, @Param("classId") Integer classId);
     int countByStudentNo(@Param("studentNo") String studentNo, @Param("excludeId") Integer excludeId);
     int insert(Student student);
