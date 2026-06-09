@@ -21,4 +21,6 @@ public interface StudentMapper {
     int countActiveCourses();
     Double getAverageScore();
     int countActiveClasses();
+
+    List<Student> findByClassId(@Param("classId") Integer classId);
 }

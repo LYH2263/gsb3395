@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.student.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="Course">
+        <id column="id" property="id"/>
+        <result column="course_code" property="courseCode"/>
+        <result column="course_name" property="courseName"/>
+        <result column="teacher_id" property="teacherId"/>
+        <result column="credit" property="credit"/>
+        <result column="teacher_name" property="teacherName"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT c.*, u.real_name as teacher_name
+        FROM courses c
+        LEFT JOIN users u ON c.teacher_id = u.id
+        ORDER BY c.id
+    </select>
+
+    <select id="findById" resultMap="BaseResultMap">
+        SELECT c.*, u.real_name as teacher_name
+        FROM courses c
+        LEFT JOIN users u ON c.teacher_id = u.id
+        WHERE c.id = #{id}
+    </select>
+</mapper>
