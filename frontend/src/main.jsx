@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom'
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import StudentList from './pages/StudentList';
+import AcademicWarning from './pages/AcademicWarning';
 import Login from './pages/Login';
 import './index.css';
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: 'students',
         element: <StudentList />,
+      },
+      {
+        path: 'warning',
+        element: <AcademicWarning />,
       }
     ],
   },

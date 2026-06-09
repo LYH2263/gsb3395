@@ -22,4 +22,8 @@ export const classApi = {
   getAll: () => api.get('/classes/all'),
 };
 
+export const warningApi = {
+  getRanking: (params) => api.get('/warning/ranking', { params }),
+};
+
 export default api;
