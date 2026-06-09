@@ -22,4 +22,10 @@ export const classApi = {
   getAll: () => api.get('/classes/all'),
 };
 
+export const warningApi = {
+  getClassWarning: (classId, term) =>
+    api.get(`/warning/class/${classId}`, { params: { term: term || undefined } }),
+  getTerms: (classId) => api.get(`/warning/class/${classId}/terms`),
+};
+
 export default api;
